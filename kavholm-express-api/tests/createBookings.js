@@ -1,8 +1,8 @@
-const db = require("../db")
+const db = require("../db");
 
 const createBookings = async (userIds, listingIds) => {
-  const userId = userIds[0]
-  const listingId = listingIds[0]
+  const userId = userIds[0];
+  const listingId = listingIds[0];
 
   const listingResults = await db.query(
     `
@@ -28,21 +28,21 @@ const createBookings = async (userIds, listingIds) => {
     WHERE id = $1;
     `,
     [listingId]
-  )
+  );
 
-  const listing = listingResults.rows[0]
+  const listing = listingResults.rows[0];
 
   const firstBooking = {
     startDate: "03-05-2021",
     endDate: "03-07-2021",
     guests: 1,
-  }
+  };
 
   const secondBooking = {
     startDate: "03-22-2021",
     endDate: "03-29-2021",
     guests: 4,
-  }
+  };
 
   await db.query(
     `
@@ -81,7 +81,7 @@ const createBookings = async (userIds, listingIds) => {
       userId,
       // bookings done separately to ensure that created_at timestamp is different
     ]
-  )
+  );
 
   await db.query(
     `
@@ -120,14 +120,14 @@ const createBookings = async (userIds, listingIds) => {
       userId,
       // bookings done separately to ensure that created_at timestamp is different
     ]
-  )
+  );
 
-  const results = await db.query(`SELECT id FROM bookings ORDER BY id ASC`)
+  const results = await db.query(`SELECT id FROM bookings ORDER BY id ASC`);
 
-  const ids = results.rows.map((row) => row.id)
-  return ids
-}
+  const ids = results.rows.map((row) => row.id);
+  return ids;
+};
 
 module.exports = {
   createBookings,
-}
+};
